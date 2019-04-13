@@ -1,6 +1,6 @@
 const express = require('express');
 const router = express.Router();
-const userDb= require('../data/userdb.js');
+const userDb= require('../data/userModel.js');
 const {authenticate} = require('../auth/auth.js');
 
 router.get('/', authenticate, (req, res) => {
