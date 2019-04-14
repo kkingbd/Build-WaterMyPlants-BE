@@ -3,7 +3,7 @@ const router = express.Router();
 const userDb= require('../data/userModel.js');
 const {authenticate} = require('../auth/auth.js');
 
-router.get('/', (req, res) => {
+router.get('/',authenticate, (req, res) => {
   userDb.find()
       .then(users => {
           res.json(users);

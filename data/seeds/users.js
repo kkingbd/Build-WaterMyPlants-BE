@@ -7,12 +7,6 @@ const seeds = [
     password: pw,
     phone: '34712334'
   },
-  {
-    username: 'md2',
-    email: 'kkigbd@gmail',
-    password: pw,
-    phone: '3471234'
-  }
 ];
 exports.seed = function(knex, Promise) {
   // Deletes ALL existing entries
