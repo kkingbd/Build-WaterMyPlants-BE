@@ -9,7 +9,7 @@ router.post('/', (req, res) => {
         if(user.username && user.password && user.phone && user.email){
             user.password = hash;
             Users.add(user)
-            .then(info => {res.status(201).json({info});})
+            .then(info => {res.status(201).json({message: "Registration Successful", info});})
         } else {
             res.status(402).json({error: 'Please provide a Username, Password, Email and Phone number'})
         }
