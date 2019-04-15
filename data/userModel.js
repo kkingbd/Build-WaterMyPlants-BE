@@ -17,7 +17,7 @@ function findBy(filter) {
 
 async function add(user) {
   const [id] = await db('users').insert(user);
-  return ['sueccess', findById(id)];
+  return [user, findById(id)];
 }
 
 function findById(id) {
