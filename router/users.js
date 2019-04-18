@@ -14,6 +14,12 @@ router.get('/',authenticate, async (req, res) => {
       })
 });
 
+router.delete('/:id',(req, res) => {
+  const {id} =req.params;
+  userDb.deleteUser(id)
+  res.status(200).json({message: "user deleted"});
+});
+
 router.get('/:id', authenticate, validUserId, validUser, async(req, res)=>{
     try{
         const user = await userDb.findById(req.params.id);

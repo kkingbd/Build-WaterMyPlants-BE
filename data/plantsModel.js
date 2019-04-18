@@ -37,6 +37,7 @@ function findById(id) {
     .first();
 }
 
+
 function deletePlantById(id) {
   return db('plants')
     .where({ id })
