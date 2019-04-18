@@ -120,7 +120,9 @@
 * POST BODY:
 ```
 {
-	"name": "ficus"
+	"name": "Ganda",
+    "description": yellow,
+
 }
 ```
 * Returns:

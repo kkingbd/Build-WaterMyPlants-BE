@@ -43,10 +43,11 @@ function deletePlantById(id) {
     .where({ id })
     .delete();
 }
-function updatePlant(id, changes){
-  db('users')
-  .where({id})
-  .update(changes)
+
+function updatePlant(id, user) {
+  return db('plants')
+    .where('id', Number(id))
+    .update(user);
 }
 
 async function addWatering(plant_id, watering){

@@ -35,35 +35,41 @@ router.delete('/:id', authenticate, validPlantId, checkForPlantOwner, async(req,
 
 // update a plant by id
 router.put('/:id', authenticate, validPlantId, checkForPlantOwner, async(req, res)=>{
-    try{
-        const changes = req.body;
-        if(changes){
-            const update = await plantDb.updatePlant(req.params.id, changes);
-            res.status(200).json({message:  'Plant updated'} );
-        } else {
-            res.status(400).json({ error: 'please provide something to update' });
-        }
-    }catch (err){
-        res.status(500).json({ error: `there was an error: ${err}` });
+    try {
+        const {name, description, last_water, schedule} = req.body;
+        const {id} =req.params;
+        if (!name ) {
+          res.status(400).json({ message: "Please provide all the required information of the plant." })
+       }
+        const count = await plantDb.updatePlant(id, req.body)
+        .then(user=>{
+          if (user) {
+            res.status(200).json(req.body)
+          } else {   
+            res.status(404).json({ message: "The plant with the specified ID does not exist." })
+            }
+          })    
+    } catch (err) {
+      res.status(500).json({ error: `there was an error accessing the db: ${err}` });
     }
-});
-
+  }
+);
 // add a watering time
 // expects an array of times
 // returns the updated schedule
-router.post('/:id', authenticate, validPlantId, checkForPlantOwner, async(req, res)=>{
+router.post('/:id', authenticate, validPlantId, checkForPlantOwner,(req, res)=>{
     try {    
         const { id } = req.params;
-        //const times = [...req.body.times];
-        const times = [5, 4];
+        const times = [...req.body.times];
+        console.log(times)
         for (let i = 0; i < times.length; i++) {
-          const wateringId = await plantDb.addWatering(id, times[i]);
+          const wateringId = plantDb.addWatering(id, times[i]);
           console.log(id)
-          const [notification] = await notifications.addNotification(wateringId);
+          const [notification] =  notifications.addNotification(wateringId);
           notifier(notification);
           console.log('notification',notification)
         }
-        const schedule = await plantDb.getWateringSchedule(id);
+        const schedule =  plantDb.getWateringSchedule(id);
         res.status(200).json({post: schedule});
     } catch (err) {
         res.status(500).json(err);

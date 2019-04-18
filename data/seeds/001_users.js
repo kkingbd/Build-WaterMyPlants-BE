@@ -1,7 +1,7 @@
 const bcrypt = require('bcryptjs');
 const pw = bcrypt.hashSync('pass');
 const seeds = [
-  { 
+  { id: 200,
     username: 'md',
     email: 'kki@gmail',
     password: pw,
@@ -10,7 +10,6 @@ const seeds = [
 ];
 exports.seed = function(knex, Promise) {
     return knex('plants')
-    //.truncate()
     .then(function(){
       return knex('users').insert([...seeds]);
     })
