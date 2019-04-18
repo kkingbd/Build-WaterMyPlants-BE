@@ -9,5 +9,8 @@ const seeds = [
   },
 ];
 exports.seed = function(knex, Promise) {
+    return knex('plants')
+    .then(function(){
       return knex('users').insert([...seeds]);
+    })
 };
