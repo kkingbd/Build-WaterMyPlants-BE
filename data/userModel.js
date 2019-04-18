@@ -9,7 +9,7 @@ module.exports = {
   deleteUser,
 };
 function deleteUser(id) {
-  return db('user')
+  return db('users')
     .where({ id })
     .delete();
 }

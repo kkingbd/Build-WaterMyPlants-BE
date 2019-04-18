@@ -15,10 +15,12 @@ router.get('/',authenticate, async (req, res) => {
 });
 
 router.delete('/:id',(req, res) => {
-  const {id} =req.params;
+  const id =req.params.id;
   userDb.deleteUser(id)
-  res.status(200).json({message: "user deleted"});
-});
+  .then( confirm => {
+    res.status(200).json({message: `This ${confirm} id deleted` })
+   })
+})
 
 router.get('/:id', authenticate, validUserId, validUser, async(req, res)=>{
     try{
